@@ -7,7 +7,7 @@ import {Proyecto} from './proyecto.model';
     foreignKeys: {
       fk_id_proyecto: {
         name: 'fk_id_proyecto',
-        entity: 'proyecto',
+        entity: 'Proyecto',
         entityKey: 'id_proyecto',
         foreignKey: 'proyectoId',
       },

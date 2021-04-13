@@ -8,7 +8,7 @@ import {Proyecto} from './proyecto.model';
     foreignKeys: {
       fk_pais_id: {
         name: 'fk_pais_id',
-        entity: 'pais',
+        entity: 'Pais',
         entityKey: 'id_pais',
         foreignKey: 'paisId',
       },

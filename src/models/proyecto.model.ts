@@ -5,9 +5,9 @@ import {Ciudad} from './ciudad.model';
 @model({
   settings: {
     foreignKeys: {
-      fk_id_ciudad: {
-        name: 'fk_id_ciudad',
-        entity: 'ciudad',
+      fk_id_proy_ciudad: {
+        name: 'fk_id_proy_ciudad',
+        entity: 'Ciudad',
         entityKey: 'id_ciudad',
         foreignKey: 'ciudadId',
       },
