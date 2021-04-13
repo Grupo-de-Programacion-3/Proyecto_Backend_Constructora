@@ -49,6 +49,12 @@ export class Usuario extends Entity {
     type: 'string',
     required: true,
   })
+  contraseña: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   rol: string;
 
 
