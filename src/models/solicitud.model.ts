@@ -8,13 +8,13 @@ import {Pago} from './pago.model';
     foreignKeys: {
       fk_id_inmueble: {
         name: 'fk_id_inmueble',
-        entity: 'inmueble',
+        entity: 'Inmueble',
         entityKey: 'id_inmueble',
         foreignKey: 'inmuebleId',
       },
       fk_id_cliente: {
         name: 'fk_id_cliente',
-        entity: 'cliente',
+        entity: 'Cliente',
         entityKey: 'id_cliente',
         foreignKey: 'clienteId',
       }
