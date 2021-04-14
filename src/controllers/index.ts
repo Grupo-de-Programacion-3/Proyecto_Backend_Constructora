@@ -16,3 +16,4 @@ export * from './cliente-solicitud.controller';
 export * from './informacion-financiera-cliente.controller';
 export * from './cliente-ciudad.controller';
 export * from './ciudad-cliente.controller';
+export * from './usuario.controller';
