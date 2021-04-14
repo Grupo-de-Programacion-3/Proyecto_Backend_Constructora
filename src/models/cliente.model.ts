@@ -4,13 +4,13 @@ import {Solicitud} from './solicitud.model';
 
 @model({
   settings: {
-    foreignKeys: {/*
-      fk_inf_finan_id: {
-        name: 'fk_id_inf_finan',
-        entity: 'Informacion-financiera',
+    foreignKeys: {
+      fk_id_inf_finan_clie: {
+        name: 'fk_id_inf_finan_clie',
+        entity: 'InformacionFinanciera',
         entityKey: 'id_informacion_financiera',
         foreignKey: 'informacionFinancieraId',
-      },*/
+      },
       fk_id_clie_ciudad: {
         name: 'fk_id_clie_ciudad',
         entity: 'Ciudad',
