@@ -9,13 +9,10 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param,
+  getModelSchemaRef, HttpErrors, param,
 
 
   patch, post,
-
-
-
 
   put,
 
@@ -23,9 +20,9 @@ import {
   response
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/Keys';
-import {Usuario} from '../models';
+import {Credenciales, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
-import {FuncionesGeneralesService, NotificacionesService} from '../services';
+import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
 
 export class UsuarioController {
@@ -35,7 +32,9 @@ export class UsuarioController {
     @service(FuncionesGeneralesService)
     public servicioFunciones: FuncionesGeneralesService,
     @service(NotificacionesService)
-    public servicioNotificaciones: NotificacionesService
+    public servicioNotificaciones: NotificacionesService,
+    @service(SesionService)
+    public servicioSesion: SesionService
   ) { }
 
   @post('/usuarios')
@@ -80,6 +79,41 @@ export class UsuarioController {
 
 
     return usuarioCreado;
+  }
+
+
+  @post('/identificar-usuario')
+  async vallidar(
+    @requestBody(
+      {
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Credenciales)
+          }
+        }
+      }
+    )
+    credenciales: Credenciales
+
+  ): Promise<object> {
+
+    let usuario = await this.usuarioRepository.findOne({where: {correo: credenciales.correo, clave: credenciales.clave}});
+    if (usuario) {
+      //generar token
+      let token = this.servicioSesion.GenerarToken(usuario);
+      return {
+        user: {
+          username: usuario.correo,
+          role: usuario.rol
+        },
+        tk: token
+
+      };
+    } else {
+      throw new HttpErrors[401]("las credenciales no son correctas.");
+    }
+
+
   }
 
 
