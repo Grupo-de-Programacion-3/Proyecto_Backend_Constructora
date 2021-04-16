@@ -49,7 +49,7 @@ export class UsuarioController {
         'application/json': {
           schema: getModelSchemaRef(Usuario, {
             title: 'NewUsuario',
-            exclude: ['id_usuario', 'contraseña'],
+            exclude: ['id_usuario', 'clave'],
           }),
         },
       },
@@ -63,7 +63,7 @@ export class UsuarioController {
     let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
     console.log(claveCifrada);
 
-    usuario.contraseña = claveCifrada;
+    usuario.clave = claveCifrada;
 
     let usuarioCreado = await this.usuarioRepository.create(usuario);
     if (usuarioCreado) {
@@ -81,6 +81,7 @@ export class UsuarioController {
 
     return usuarioCreado;
   }
+
 
   @get('/usuarios/count')
   @response(200, {

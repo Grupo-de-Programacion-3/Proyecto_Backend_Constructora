@@ -49,7 +49,7 @@ export class Usuario extends Entity {
     type: 'string',
     required: true,
   })
-  contraseña?: string;
+  clave?: string;
 
   @property({
     type: 'string',

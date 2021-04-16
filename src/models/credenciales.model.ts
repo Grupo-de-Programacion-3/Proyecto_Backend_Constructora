@@ -6,7 +6,7 @@ export class Credenciales extends Model {
     type: 'string',
     required: true,
   })
-  nombre_usuario: string;
+  correo: string;
 
   @property({
     type: 'string',
