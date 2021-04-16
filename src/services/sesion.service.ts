@@ -14,10 +14,26 @@ export class SesionService {
     let tk = jwt.sign({
       exp: llaves.tiempoVencimientoJWT,
       data: {
-        username: usuario.nombres,
-        role: usuario.rol
+        username: usuario.correo,
+        rol: usuario.rol
       }
     }, llaves.claveSecretaJWT);
     return tk;
   }
+
+  /**
+   * Verificar la validez de un token JWT
+   */
+
+  VerificarTokenJWT(token: string) {
+    try {
+      let decoded = jwt.verify(token, llaves.claveSecretaJWT);
+      return decoded;
+    } catch {
+      return null;
+    }
+
+  }
+
+
 }
