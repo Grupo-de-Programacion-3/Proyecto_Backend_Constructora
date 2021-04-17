@@ -22,7 +22,7 @@ export class AdminStrategy implements AuthenticationStrategy {
     }
     let datos = this.servicioSesion.VerificarTokenJWT(token);
     if (datos) {
-      if (datos.data.rol == "6079b8dc0710c91a3878fac1") {
+      if (datos.data.rol == "ADMIN") {
         let perfil: UserProfile = Object.assign({
           nombre_usuario: datos.data.username,
           rol: datos.data.rol
