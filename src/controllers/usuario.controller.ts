@@ -112,8 +112,7 @@ export class UsuarioController {
 
     await this.usuarioRepository.update(usuario);
     let contenido = `Hola, buen día.Usted ha solicitado una nueva clave en la plataforma.Sus datos son:
-        <li>Usuario: ${usuario.correo}</li> y Contraseña: ${claveAleatoria}</li>
-      </ul>
+        Usuario: ${usuario.correo} y Contraseña: ${claveAleatoria}
       Gracias por confiar en nuestra plataforma de la Constructora.`;
     this.servicioNotificaciones.EnviarNotificacionPorSMS(usuario.celular, contenido);
     return {
