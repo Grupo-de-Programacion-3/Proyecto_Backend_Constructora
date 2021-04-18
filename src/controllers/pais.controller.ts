@@ -1,21 +1,26 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Pais} from '../models';
 import {PaisRepository} from '../repositories';
@@ -23,9 +28,10 @@ import {PaisRepository} from '../repositories';
 export class PaisController {
   constructor(
     @repository(PaisRepository)
-    public paisRepository : PaisRepository,
-  ) {}
+    public paisRepository: PaisRepository,
+  ) { }
 
+  @authenticate('admin')
   @post('/pais')
   @response(200, {
     description: 'Pais model instance',

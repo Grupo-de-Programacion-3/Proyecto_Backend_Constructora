@@ -14,18 +14,15 @@ import {
 
   patch, post,
 
-
-
-
   put,
 
   requestBody,
   response
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/Keys';
-import {ResetearClave, Usuario} from '../models';
+import {Credenciales, ResetearClave, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
-import {FuncionesGeneralesService, NotificacionesService} from '../services';
+import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
 
 export class UsuarioController {
@@ -35,7 +32,9 @@ export class UsuarioController {
     @service(FuncionesGeneralesService)
     public servicioFunciones: FuncionesGeneralesService,
     @service(NotificacionesService)
-    public servicioNotificaciones: NotificacionesService
+    public servicioNotificaciones: NotificacionesService,
+    @service(SesionService)
+    public servicioSesion: SesionService
   ) { }
 
   @post('/usuarios')
@@ -49,7 +48,7 @@ export class UsuarioController {
         'application/json': {
           schema: getModelSchemaRef(Usuario, {
             title: 'NewUsuario',
-            exclude: ['id_usuario', 'contraseña'],
+            exclude: ['id_usuario', 'clave'],
           }),
         },
       },
@@ -63,7 +62,7 @@ export class UsuarioController {
     let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
     console.log(claveCifrada);
 
-    usuario.contraseña = claveCifrada;
+    usuario.clave = claveCifrada;
 
     let usuarioCreado = await this.usuarioRepository.create(usuario);
     if (usuarioCreado) {
@@ -109,7 +108,7 @@ export class UsuarioController {
     let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
     console.log(claveCifrada);
 
-    usuario.contraseña = claveCifrada;
+    usuario.clave = claveCifrada;
 
     await this.usuarioRepository.update(usuario);
     let contenido = `Hola, buen día.Usted ha solicitado una nueva clave en la plataforma.Sus datos son:
@@ -121,6 +120,41 @@ export class UsuarioController {
       envio: "ok"
     };
   }
+  @post('/identificar-usuario')
+  async vallidar(
+    @requestBody(
+      {
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Credenciales)
+          }
+        }
+      }
+    )
+    credenciales: Credenciales
+
+  ): Promise<object> {
+
+    let usuario = await this.usuarioRepository.findOne({where: {correo: credenciales.correo, clave: credenciales.clave}});
+    if (usuario) {
+      //generar token
+      let token = this.servicioSesion.GenerarToken(usuario);
+      return {
+        user: {
+          username: usuario.correo,
+          role: usuario.rol
+        },
+        tk: token
+
+      };
+    } else {
+      throw new HttpErrors[401]("las credenciales no son correctas.");
+    }
+
+
+  }
+
+
   @get('/usuarios/count')
   @response(200, {
     description: 'Usuario model count',

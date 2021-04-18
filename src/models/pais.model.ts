@@ -14,13 +14,13 @@ export class Pais extends Entity {
     type: 'string',
     required: true,
   })
-  Codigo: string;
+  codigo: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  Nombre: string;
+  nombre: string;
 
   @hasMany(() => Ciudad)
   ciudades: Ciudad[];
