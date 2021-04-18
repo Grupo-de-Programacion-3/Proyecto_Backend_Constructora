@@ -9,7 +9,7 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param,
+  getModelSchemaRef, HttpErrors, param,
 
 
   patch, post,
@@ -23,7 +23,7 @@ import {
   response
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/Keys';
-import {Usuario} from '../models';
+import {ResetearClave, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService} from '../services';
 
@@ -82,6 +82,45 @@ export class UsuarioController {
     return usuarioCreado;
   }
 
+
+  @post('/reset-clave')
+  @response(200, {
+    content: {'application/json': {schema: getModelSchemaRef(ResetearClave)}},
+  })
+  async resetClave(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ResetearClave),
+        },
+      },
+    })
+    resetearClave: ResetearClave,
+  ): Promise<Object> {
+
+    let usuario = await this.usuarioRepository.findOne({where: {correo: resetearClave.correo}})
+    if (!usuario) {
+      throw new HttpErrors[401]("Este usuario no existe");
+    }
+
+    let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
+    console.log(claveAleatoria);
+
+    let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
+    console.log(claveCifrada);
+
+    usuario.contraseña = claveCifrada;
+
+    await this.usuarioRepository.update(usuario);
+    let contenido = `Hola, buen día.Usted ha solicitado una nueva clave en la plataforma.Sus datos son:
+        <li>Usuario: ${usuario.correo}</li> y Contraseña: ${claveAleatoria}</li>
+      </ul>
+      Gracias por confiar en nuestra plataforma de la Constructora.`;
+    this.servicioNotificaciones.EnviarNotificacionPorSMS(usuario.celular, contenido);
+    return {
+      envio: "ok"
+    };
+  }
   @get('/usuarios/count')
   @response(200, {
     description: 'Usuario model count',

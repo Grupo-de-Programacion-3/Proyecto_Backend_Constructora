@@ -34,10 +34,10 @@ export class Usuario extends Entity {
   correo: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  celular: number;
+  celular: string;
 
   @property({
     type: 'string',

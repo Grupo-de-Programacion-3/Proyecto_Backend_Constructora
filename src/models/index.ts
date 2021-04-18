@@ -8,3 +8,4 @@ export * from './bloque.model';
 export * from './inmueble.model';
 export * from './solicitud.model';
 export * from './usuario.model';
+export * from './resetear-clave.model';

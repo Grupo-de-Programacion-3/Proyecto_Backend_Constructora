@@ -60,7 +60,8 @@
     "generate-password": "^1.6.0",
     "loopback-connector-mongodb": "^5.5.0",
     "loopback-connector-mysql": "^5.4.4",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "twilio": "^3.60.0"
   },
   "devDependencies": {
     "@loopback/build": "^6.3.0",
