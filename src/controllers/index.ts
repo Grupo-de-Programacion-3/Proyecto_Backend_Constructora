@@ -27,3 +27,4 @@ export * from './pago.controller';
 export * from './cliente.controller';
 export * from './informacion-financiera.controller';
 export * from './carga-archivos.controller';
+export * from './descarga-archivos.controller';
