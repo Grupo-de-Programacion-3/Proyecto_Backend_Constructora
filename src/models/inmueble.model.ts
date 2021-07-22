@@ -38,7 +38,7 @@ export class Inmueble extends Entity {
     type: 'number',
     required: true,
   })
-  valor: string;
+  valor: number;
 
   @belongsTo(() => Bloque)
   bloqueId: number;

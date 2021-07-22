@@ -25,7 +25,7 @@ import {
 import {Ciudad} from '../models';
 import {CiudadRepository} from '../repositories';
 
-@authenticate('admin')
+//@authenticate('admin')
 export class CiudadController {
   constructor(
     @repository(CiudadRepository)
