@@ -53,10 +53,10 @@ export class InformacionFinanciera extends Entity {
   nom_ref_familiar: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  tel_ref_familiar: number;
+  tel_ref_familiar: string;
 
   @property({
     type: 'string',
@@ -65,10 +65,10 @@ export class InformacionFinanciera extends Entity {
   nom_ref_personal: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  tel_ref_personal: number;
+  tel_ref_personal: string;
 
   @hasOne(() => Cliente)
   cliente: Cliente;
