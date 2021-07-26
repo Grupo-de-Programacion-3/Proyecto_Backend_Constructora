@@ -59,10 +59,10 @@ export class Cliente extends Entity {
   fotografia: any;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  num_celular: number;
+  num_celular: string;
 
   @property({
     type: 'string',
