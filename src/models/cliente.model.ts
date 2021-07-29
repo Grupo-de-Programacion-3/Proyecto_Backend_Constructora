@@ -53,10 +53,10 @@ export class Cliente extends Entity {
   fecha_nacimiento: string;
 
   @property({
-    type: 'any',
+    type: 'string',
     required: true,
   })
-  fotografia: any;
+  fotografia: string;
 
   @property({
     type: 'string',
